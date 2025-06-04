@@ -18,7 +18,7 @@ services:
       - uploads:/app/uploads
 
   mongo:
-    image: mongo:6.0
+    image: mongo:6
     container_name: cdn-mongo
     ports:
       - "${DB_PORT}:27017"
