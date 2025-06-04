@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: cdn-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:8080"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+    volumes:
+      - uploads:/app/uploads
+
+  mongo:
+    image: mongo:6.0
+    container_name: cdn-mongo
+    ports:
+      - "${DB_PORT}:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  uploads:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
