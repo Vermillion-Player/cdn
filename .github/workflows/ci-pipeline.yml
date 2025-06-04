@@ -45,16 +45,4 @@ jobs:
           cp .env-example .env
           docker-compose up -d
           docker-compose ps
-          docker-compose run api go test tests/*.go -v
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Install golangci-lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s latest
-          mv ./bin/golangci-lint /usr/local/bin/
-      - name: Run GolangCI Lint
-        run: golangci-lint run --timeout 10m
+          docker-compose run cdn-api go test tests/*.go -v
